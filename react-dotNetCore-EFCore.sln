@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "back", "back", "{40C9351E-219C-4DFC-B0ED-87225DD71733}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3198227A-B727-41D9-A50C-F3E3D8C55DB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProAtividade.API", "back\src\ProAtividade.API\ProAtividade.API.csproj", "{100F1A04-DBB5-43D6-9208-368B9CE845A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{100F1A04-DBB5-43D6-9208-368B9CE845A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100F1A04-DBB5-43D6-9208-368B9CE845A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100F1A04-DBB5-43D6-9208-368B9CE845A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100F1A04-DBB5-43D6-9208-368B9CE845A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3198227A-B727-41D9-A50C-F3E3D8C55DB0} = {40C9351E-219C-4DFC-B0ED-87225DD71733}
+		{100F1A04-DBB5-43D6-9208-368B9CE845A3} = {3198227A-B727-41D9-A50C-F3E3D8C55DB0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C189A201-FF30-45F0-B09B-786F4F6F5846}
+	EndGlobalSection
+EndGlobal
