@@ -24,6 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # SQlite ignore 
-.db
-.db-shm
-.db-wal
+*.db
+*.db-shm
+*.db-wal
