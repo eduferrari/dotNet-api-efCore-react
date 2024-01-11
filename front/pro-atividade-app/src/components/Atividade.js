@@ -2,19 +2,19 @@ import React from 'react'
 
 function prioridadeConfig(prioridadeValue) {
     switch (prioridadeValue) {
-        case "1":
+        case "Baixa":
             return {
                 Label: "Baixa",
                 Icon: "smile",
                 Color: "success",
             };
-        case "2":
+        case "Normal":
             return {
                 Label: "Normal",
                 Icon: "meh",
                 Color: "primary",
             };
-        case "3":
+        case "Alta":
             return {
                 Label: "Alta",
                 Icon: "frown",
@@ -53,7 +53,7 @@ export default function Atividades(props) {
                     <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => props.getAtividade(props.atividade.id)}>
                         <i className="me-1 fa-solid fa-pen"></i>Editar
                     </button>
-                    <button className="btn btn-sm btn-outline-danger" onClick={() => props.delAtividade(props.atividade.id)}>
+                    <button className="btn btn-sm btn-outline-danger" onClick={() => props.handleDeleteModal(props.atividade.id)}>
                         <i className="me-1 fa-regular fa-trash-can"></i>Deletar
                     </button>
                 </div>

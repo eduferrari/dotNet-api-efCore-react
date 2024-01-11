@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
 
 const atividadeInicial = {
     id: 0,
     titulo: '',
-    prioridade: '0',
+    prioridade: 'NaoDefinido',
     descricao: ''
 }
 
@@ -25,7 +25,7 @@ export default function AtividadeForm(props) {
     const handlerSubmit = (e) => {
         e.preventDefault();
 
-        if(props.selAtividade.id !== 0){
+        if (props.selAtividade.id !== 0) {
             props.updAtificade(atividade);
         } else {
             props.addAtividade(atividade);
@@ -53,13 +53,13 @@ export default function AtividadeForm(props) {
 
     return (
         <>
-            <h3 className="mb-3">Atividade {atividade.id !== 0 ? atividade.id : ''}</h3>
             <form className="row g-3" onSubmit={handlerSubmit}>
                 <div className="col-9">
                     <label className="form-label"><strong>Título</strong></label>
                     <input type="text" name="titulo" id="titulo" className="form-control"
                         onChange={inputTextHandler}
                         value={atividade.titulo}
+                        required
                     />
                 </div>
                 <div className="col-3">
@@ -67,11 +67,12 @@ export default function AtividadeForm(props) {
                     <select className="form-select" name="prioridade" id="prioridade"
                         onChange={inputTextHandler}
                         value={atividade.prioridade}
+                        required
                     >
-                        <option defaultValue="0">Selecionar...</option>
-                        <option value="1">Baixa</option>
-                        <option value="2">Normal</option>
-                        <option value="3">Alta</option>
+                        <option value="NaoDefinido">Selecionar...</option>
+                        <option value="Baixa">Baixa</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Alta">Alta</option>
                     </select>
                 </div>
                 <div className="col-12">
@@ -79,12 +80,13 @@ export default function AtividadeForm(props) {
                     <textarea rows="3" name="descricao" id="descricao" className="form-control"
                         onChange={inputTextHandler}
                         value={atividade.descricao}
+                        required
                     />
                 </div>
-                <div className="col-12">
+                <div className="col-12 d-flex justify-content-between">
                     {atividade.id === 0 ?
                         (
-                            <button type="submit" className="btn btn-success">
+                            <button type="submit" className="btn btn-success float-end">
                                 <i className="me-1 fa-solid fa-floppy-disk"></i>Salvar
                             </button>
                         ) : (
@@ -92,7 +94,7 @@ export default function AtividadeForm(props) {
                                 <button type="submit" className="btn btn-success me-2">
                                     <i className="me-1 fa-solid fa-floppy-disk"></i>Salvar
                                 </button>
-                                <button className="btn btn-primary ms-2" onClick={handlerCancelar}>
+                                <button className="btn btn-secondary ms-2" onClick={handlerCancelar}>
                                     <i className="me-1 fa-solid fa-ban"></i>Cancelar
                                 </button>
                             </>
