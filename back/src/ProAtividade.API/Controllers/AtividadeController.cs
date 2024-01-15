@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProAtividade.API.Data;
-using ProAtividade.API.Models;
+using ProAtividade.Domain.Entities;
+using ProAtividade.Domain.Interfaces.Services;
 
 namespace ProAtividade.API.Controllers
 {
@@ -11,53 +11,95 @@ namespace ProAtividade.API.Controllers
     [Route("api/[controller]")]
     public class AtividadeController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IAtividadeService _atividadeService;
 
-        public AtividadeController(DataContext context)
+        public AtividadeController(IAtividadeService atividadeService)
         {
-            _context = context;
+            _atividadeService = atividadeService;
         }
 
         [HttpGet]
-        public IEnumerable<Atividade> Get()
+        public async Task<IActionResult> Get()
         {
-            return _context.Atividades;
+            try
+            {
+                var atividades = await _atividadeService.ListarTodasAtividadeAsync();
+                if (!atividades.Any()) return NoContent();
+
+                return Ok(atividades);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao tentar recuperar atividades. Problema: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
-        public Atividade Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return _context.Atividades.FirstOrDefault(x => x.Id == id);
+            try
+            {
+                var atividade = await _atividadeService.SelecionarAtividadePorIdAsync(id);
+                if (atividade == null) return NoContent();
+
+                return Ok(atividade);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao tentar recuperar atividade. Problema: {ex.Message}");
+            }
         }
 
         [HttpPost]
-        public Atividade Post(Atividade atividade)
+        public async Task<IActionResult> Post(Atividade model)
         {
-            _context.Atividades.Add(atividade);
-            if (_context.SaveChanges() <= 0) throw new Exception("Atividade não adicionada!");
+            try
+            {
+                var atividade = await _atividadeService.AdicionarAtividade(model);
+                if (atividade == null) return NoContent();
 
-            return atividade;
+                return Ok(atividade);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao tentar adicionar atividade. Problema: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
-        public Atividade Put(int id, Atividade atividade)
+        public async Task<IActionResult> Put(int id, Atividade model)
         {
-            if (atividade.Id != id) throw new Exception("Não existe uma atividade com essa informação!");
+            try
+            {
+                if (model.Id != id) return StatusCode(409, $"Não existe uma atividade com essa informação!");
 
-            _context.Atividades.Update(atividade);
-            if (_context.SaveChanges() <= 0) throw new Exception("Atividade não atualizada!");
+                var atividade = await _atividadeService.AtualizarAtividade(model);
+                if (atividade == null) return NoContent();
 
-            return _context.Atividades.FirstOrDefault(x => x.Id == id);
+                return Ok(atividade);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao tentar atualizar atividade. Problema: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
-        public bool Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var atividade = _context.Atividades.FirstOrDefault(x => x.Id == id);
-            if (atividade.Id != id) throw new Exception("Não existe uma atividade com essa informação!");
+            try
+            {
+                var atividade = await _atividadeService.SelecionarAtividadePorIdAsync(id);
+                if (atividade == null) return StatusCode(409, $"Não existe uma atividade com essa informação!");
 
-            _context.Atividades.Remove(atividade);
-            return _context.SaveChanges() > 0;
+                if (!await _atividadeService.DeletarAtividade(atividade.Id)) return BadRequest("Erro ao tentar deletar atividade!");
+
+                return Ok(new { message = "Deletado" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao tentar deletar atividade. Problema: {ex.Message}");
+            }
         }
     }
 }

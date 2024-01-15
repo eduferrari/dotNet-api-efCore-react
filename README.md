@@ -1,1 +1,1 @@
-# Aplicação Web utilizando Tecnologia API RESTful com o ASP.NET Core 6 e Entity Framework Core 6 e como Front-End REACT.
+# Aplicação Web utilizando ASP.NET(API) e EF Core com REACT.
