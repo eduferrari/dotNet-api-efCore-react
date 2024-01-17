@@ -29,7 +29,7 @@ function prioridadeConfig(prioridadeValue) {
     }
 }
 
-export default function Atividades(props) {
+export default function AtividadeItem(props) {
     return (
         <div key={props.atividade.id} className={"card mb-2 shadow-sm border-" + prioridadeConfig(props.atividade.prioridade).Color}>
             <div className="card-body">
@@ -50,7 +50,7 @@ export default function Atividades(props) {
                 </div>
                 <p className="card-text">{props.atividade.descricao}</p>
                 <div className="d-flex justify-content-end pt-2 m-0 border-top">
-                    <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => props.getAtividade(props.atividade.id)}>
+                    <button className="btn btn-sm btn-outline-primary me-2" onClick={() => props.getAtividade(props.atividade.id)}>
                         <i className="me-1 fa-solid fa-pen"></i>Editar
                     </button>
                     <button className="btn btn-sm btn-outline-danger" onClick={() => props.handleDeleteModal(props.atividade.id)}>

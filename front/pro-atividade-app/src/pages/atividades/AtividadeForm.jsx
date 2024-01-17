@@ -94,7 +94,7 @@ export default function AtividadeForm(props) {
                                 <button type="submit" className="btn btn-success me-2">
                                     <i className="me-1 fa-solid fa-floppy-disk"></i>Salvar
                                 </button>
-                                <button className="btn btn-secondary ms-2" onClick={handlerCancelar}>
+                                <button className="btn btn-warning ms-2" onClick={handlerCancelar}>
                                     <i className="me-1 fa-solid fa-ban"></i>Cancelar
                                 </button>
                             </>
