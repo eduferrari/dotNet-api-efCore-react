@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TitlePage from "../../components/TitlePage";
 
 const clientes = [
@@ -43,7 +43,7 @@ const clientes = [
 
 export default function ClienteLista() {
 	const [termoBusca, setTermpoBusca] = useState("");
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const handleInputChange = (e) => {
 		setTermpoBusca(e.target.value);
@@ -57,7 +57,7 @@ export default function ClienteLista() {
 	});
 
 	const addCliente = () => {
-		history.push("/cliente/detalhe");
+		navigate("/cliente/detalhe");
 	};
 
 	return (
@@ -99,7 +99,7 @@ export default function ClienteLista() {
 							<td>{cliente.situacao}</td>
 							<th scope="row">
 								<div className="text-center">
-									<button className="btn btn-sm btn-outline-primary me-2" onClick={() => history.push(`/cliente/detalhe/${cliente.id}`)}>
+									<button className="btn btn-sm btn-outline-primary me-2" onClick={() => navigate(`/cliente/detalhe/${cliente.id}`)}>
 										<i className="fas fa-user-edit me-2"></i>
 										Editar
 									</button>
