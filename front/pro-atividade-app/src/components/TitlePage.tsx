@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function TitlePage({ title, children }) {
+interface TitlePageProps {
+	title: string;
+	children?: React.ReactNode;
+}
+
+const TitlePage: React.FC<TitlePageProps> = ({ title, children }: TitlePageProps) => {
 	return (
 		<div className="d-flex justify-content-between align-itens-end mt-2 pb-3 border-bottom border-1">
 			<h3 className="m-0 p-0">{title}</h3>
@@ -8,3 +13,5 @@ export default function TitlePage({ title, children }) {
 		</div>
 	);
 }
+
+export default TitlePage;

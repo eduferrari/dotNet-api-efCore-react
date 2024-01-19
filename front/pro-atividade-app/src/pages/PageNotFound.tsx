@@ -1,6 +1,4 @@
-import React from 'react'
-
-export default function PageNotFound() {
+const PageNotFound: React.FC = () => {
   return (
 		<div>
 			<h1 className="mt-4 mb-4 text-center">
@@ -16,3 +14,5 @@ export default function PageNotFound() {
 		</div>
   );
 }
+
+export default PageNotFound;

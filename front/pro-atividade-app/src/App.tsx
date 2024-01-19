@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Atividade from "./pages/atividades/Atividade";
 import { Routes, Route } from "react-router-dom";
@@ -6,7 +7,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import ClienteForm from './pages/clientes/ClienteForm';
 import PageNotFound from "./pages/PageNotFound";
 
-export default function App() {
+const App : React.FC = () => {
   return (
     <Routes>
       <Route path='/' element={<Dashboard />} />
@@ -20,3 +21,5 @@ export default function App() {
     </Routes>
   );
 }
+
+export default App;

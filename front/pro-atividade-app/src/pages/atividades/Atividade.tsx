@@ -4,23 +4,32 @@ import AtividadeForm from './AtividadeForm';
 import AtividadeLista from './AtividadeLista';
 import api from "../../api/atividade";
 import TitlePage from "../../components/TitlePage";
+import { IAtividade, Prioridade } from "../../model/atividade";
 
-export default function Atividade() {
+const atividadeInicial: IAtividade = {
+    id: 0,
+    titulo: '',
+    prioridade: Prioridade.NaoDefinido,
+    descricao: ''
+}
+
+const Atividade = () => {
 	const [showAtividadeModal, setShowAtividadeModal] = useState(false);
 	const [smShowDeleteModal, setSmShowDeleteModal] = useState(false);
-	const [atividades, setAtividades] = useState([]);
-	const [atividade, setAtividade] = useState({ id: 0 });
+	
+	const [atividades, setAtividades] = useState<IAtividade[]>([]);
+	const [atividade, setAtividade] = useState<IAtividade>(atividadeInicial);
 
-	const handleAtividadeModal = () =>
-		setShowAtividadeModal(!showAtividadeModal);
-	const handleDeleteModal = (id) => {
+	const handleAtividadeModal = () => setShowAtividadeModal(!showAtividadeModal);
+
+	const handleDeleteModal = (id: number) => {
 		if (id !== 0 && id !== undefined) {
 			const atividade = atividades.filter(
 				(atividade) => atividade.id === id
 			);
 			setAtividade(atividade[0]);
 		} else {
-			setAtividade({ id: 0 });
+			setAtividade(atividadeInicial);
 		}
 		setSmShowDeleteModal(!smShowDeleteModal);
 	};
@@ -40,16 +49,16 @@ export default function Atividade() {
 
 	const newAtividade = () => {
 		handleAtividadeModal();
-		setAtividade({ id: 0 });
+		setAtividade(atividadeInicial);
 	};
 
-	const addAtividade = async (ativ) => {
+	const addAtividade = async (ativ: IAtividade) => {
 		handleAtividadeModal();
 		const response = await api.post("atividade", ativ);
 		setAtividades([...atividades, response.data]);
 	};
 
-	const getAtividade = async (id) => {
+	const getAtividade = async (id: number) => {
 		const atividade = atividades.filter(
 			(atividade) => atividade.id === id
 		);
@@ -57,17 +66,17 @@ export default function Atividade() {
 		handleAtividadeModal();
 	};
 
-	const updAtividade = async (ativ) => {
+	const updAtividade = async (ativ: IAtividade) => {
 		handleAtividadeModal();
 		const response = await api.put(`atividade/${ativ.id}`, ativ);
 		const { id } = response.data;
 		setAtividades(
 			atividades.map((item) => (item.id === id ? response.data : item))
 		);
-		setAtividade({ id: 0 });
+		setAtividade(atividadeInicial);
 	};
 
-	const delAtividade = async (id) => {
+	const delAtividade = async (id: number) => {
 		handleDeleteModal(0);
 		if (await api.delete(`atividade/${id}`)) {
 			const atividadeFiltrada = atividades.filter(
@@ -79,17 +88,12 @@ export default function Atividade() {
 
 	const cancelAtividade = () => {
 		handleAtividadeModal();
-		setAtividade({ id: 0 });
+		setAtividade(atividadeInicial);
 	};
 
 	return (
 		<>
-			<TitlePage
-				title={
-					"Atividade " + (atividade.id !== 0 ? atividade.id : "")
-				}
-				newAtividade={newAtividade}
-			>
+			<TitlePage title={"Atividade " + (atividade.id !== 0 ? atividade.id : "")}>
 				<Button variant="outline-secondary" onClick={newAtividade}>
 					<i className="fas fa-plus"></i>
 				</Button>
@@ -109,7 +113,6 @@ export default function Atividade() {
 				</Modal.Header>
 				<Modal.Body>
 					<AtividadeForm
-						atividades={atividades}
 						addAtividade={addAtividade}
 						updAtificade={updAtividade}
 						cancelAtividade={cancelAtividade}
@@ -118,11 +121,7 @@ export default function Atividade() {
 				</Modal.Body>
 			</Modal>
 
-			<Modal
-				size="sm"
-				show={smShowDeleteModal}
-				onHide={handleDeleteModal}
-			>
+			<Modal size="sm" show={smShowDeleteModal} onHide={() => handleDeleteModal}>
 				<Modal.Header closeButton>
 					<Modal.Title>Excluir Atividade</Modal.Title>
 				</Modal.Header>
@@ -144,3 +143,5 @@ export default function Atividade() {
 		</>
 	);
 }
+
+export default Atividade;
